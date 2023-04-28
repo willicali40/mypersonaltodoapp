@@ -1,0 +1,11 @@
+{
+  "name": "mypersonaltodoapp",
+  "version": "1.0.0",
+  "description": "my daily personal app for tasks",
+  "main": "index.js",
+  "scripts": {
+    "live": "live-server"
+  },
+  "author": "william david <willicali40@hotmail.com>",
+  "license": "MIT"
+}

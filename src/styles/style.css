@@ -1,0 +1,49 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+}
+
+.header > input {
+    width: 90%;
+}
+
+.main {
+    width: 90%;
+    height: auto;
+}
+
+.main > ul {
+    padding: 0;
+}
+
+ul li {
+    width: 100%;
+    margin: 1rem 0 1rem 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+li > label {
+    width: 80%;
+}
