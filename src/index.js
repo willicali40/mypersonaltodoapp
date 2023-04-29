@@ -5,24 +5,29 @@ let task = "";
 
 inputTask.addEventListener("input", (e) => {
   if (e.target.value.trim() !== "") {
-    task = e.target.value;
+    task = e.target.value.trim();
   }
 });
 
 inputTask.addEventListener("keydown", (e) => {
   if (e.key == "Enter") {
-    pushData();
-    createTask(task);
+    let idGenerated = generateId()
+    pushData(idGenerated);
+    createTask(task, idGenerated);
   }
 });
 
-let identifier = 0;
+function generateId() {
+    const date = Date.now().toString(30)
+    const random = Math.random().toString(20).substring(2)
+    return date + random
+}
 
 let data = []
 
-function pushData() {
+function pushData(id) {
     data.push({
-        id: identifier,
+        id: id,
         status: 'pending',
         task: task,
     })
@@ -34,9 +39,9 @@ function storageLocalData() {
     localStorage.setItem('data', JSON.stringify(data))
 }
 
-function createTask(task) {
+function createTask(task, id) {
   const template = `
-    <li status="pending" id="${identifier}">
+    <li status="pending" id="${id}">
         <input type="checkbox" state="false" id="checkbox">
         <label state="false" id="label">${task}</label>
         <i class="fa-solid fa-xmark" state="false" id="delete"></i>
@@ -44,10 +49,7 @@ function createTask(task) {
     `;
     ul.insertAdjacentHTML('beforeend', template)
     inputTask.value = '';
-    console.log('identifier before add 1 ' + identifier);
-    identifier++
     console.log(data);
-    console.log('identifier after add 1 ' + identifier);
 }
 
 ul.addEventListener('click', (e) => {
@@ -59,14 +61,29 @@ ul.addEventListener('click', (e) => {
     if (element.attributes.id.value === 'checkbox') {
         if (parentElement.attributes.status.value === 'pending') {
             parentElement.attributes.status.value = 'completed'
-            data[parentElementId].status = 'completed'
+
+
+            data.map((ele) => {
+                if (ele.id == parentElementId) {
+                    ele.status = 'completed'
+                }
+            })
             console.log(data);
+
+
+
             label.style.textDecoration = 'line-through'
             storageLocalData()
         } else if (parentElement.attributes.status.value === 'completed') {
             parentElement.attributes.status.value = 'pending';
             label.style.textDecoration = 'none';
-            data[parentElementId].status = 'pending'
+
+            data.map((ele) => {
+                if (ele.id == parentElementId) {
+                    ele.status = 'pending'
+                }
+            })
+            
             console.log(data);
             storageLocalData()
         }
@@ -79,9 +96,6 @@ ul.addEventListener('click', (e) => {
 
         console.log(data);
         storageLocalData()
-        console.log(identifier);
-        identifier--
-        console.log(identifier);
     }
 })
 
@@ -102,8 +116,6 @@ window.addEventListener('load', () => {
             </li>
             `;
             ul.insertAdjacentHTML('beforeend', renderFromBrowser)
-            identifier = element.id
-            console.log('identifier from localStorage is ' + identifier);
         });
 
     } else {
