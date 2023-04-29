@@ -1,5 +1,9 @@
 const inputTask = document.querySelector("#inputTask");
 const ul = document.querySelector("#ul");
+const counter = document.querySelector("#counter");
+const allButton = document.querySelector("#allButtons");
+const pendingButton = document.querySelector("#pending");
+const completeButton = document.querySelector("#complete");
 
 let task = "";
 
@@ -14,6 +18,7 @@ inputTask.addEventListener("keydown", (e) => {
     let idGenerated = generateId()
     pushData(idGenerated);
     createTask(task, idGenerated);
+    totalTasks()
   }
 });
 
@@ -74,6 +79,7 @@ ul.addEventListener('click', (e) => {
 
             label.style.textDecoration = 'line-through'
             storageLocalData()
+            totalTasks()
         } else if (parentElement.attributes.status.value === 'completed') {
             parentElement.attributes.status.value = 'pending';
             label.style.textDecoration = 'none';
@@ -86,6 +92,7 @@ ul.addEventListener('click', (e) => {
             
             console.log(data);
             storageLocalData()
+            totalTasks()
         }
     } else if (e.target.attributes.id.value === 'delete') {
         const indexOfElement = data.findIndex((ele) => {
@@ -96,6 +103,7 @@ ul.addEventListener('click', (e) => {
 
         console.log(data);
         storageLocalData()
+        totalTasks()
     }
 })
 
@@ -121,4 +129,18 @@ window.addEventListener('load', () => {
     } else {
         console.log('no data');
     }
+    totalTasks()
 })
+
+function totalTasks() {
+    let tasks = 0
+
+    data.map((ele) => {
+        if (ele.status === 'pending') {
+            tasks++
+        }
+    })
+    counter.innerHTML = `
+        ${tasks} pending ${tasks !== 1? 'tasks': 'task'} left
+    `
+}

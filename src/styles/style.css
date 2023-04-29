@@ -42,8 +42,24 @@ ul li {
     list-style: none;
     display: flex;
     justify-content: space-around;
+    font-size: 1.2rem;
 }
 
 li > label {
     width: 80%;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer > span {
+    margin: 1rem;
+    text-align: center;
+    font-size: 1.3rem;
+}
+.buttons {
+    display: flex;
+    padding: .5rem;
 }
