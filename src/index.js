@@ -1,7 +1,7 @@
 const inputTask = document.querySelector("#inputTask");
 const ul = document.querySelector("#ul");
 const counter = document.querySelector("#counter");
-const allButton = document.querySelector("#allButtons");
+const allButton = document.querySelector("#all");
 const pendingButton = document.querySelector("#pending");
 const completeButton = document.querySelector("#complete");
 
@@ -54,7 +54,6 @@ function createTask(task, id) {
     `;
     ul.insertAdjacentHTML('beforeend', template)
     inputTask.value = '';
-    console.log(data);
 }
 
 ul.addEventListener('click', (e) => {
@@ -62,35 +61,25 @@ ul.addEventListener('click', (e) => {
     const parentElement = element.parentNode;
     const parentElementId = parentElement.attributes.id.value
     const label = parentElement.querySelector('#label');
-
     if (element.attributes.id.value === 'checkbox') {
         if (parentElement.attributes.status.value === 'pending') {
             parentElement.attributes.status.value = 'completed'
-
-
             data.map((ele) => {
                 if (ele.id == parentElementId) {
                     ele.status = 'completed'
                 }
             })
-            console.log(data);
-
-
-
             label.style.textDecoration = 'line-through'
             storageLocalData()
             totalTasks()
         } else if (parentElement.attributes.status.value === 'completed') {
             parentElement.attributes.status.value = 'pending';
             label.style.textDecoration = 'none';
-
             data.map((ele) => {
                 if (ele.id == parentElementId) {
                     ele.status = 'pending'
                 }
             })
-            
-            console.log(data);
             storageLocalData()
             totalTasks()
         }
@@ -100,21 +89,14 @@ ul.addEventListener('click', (e) => {
         })
         data.splice(indexOfElement, 1)
         parentElement.remove()
-
-        console.log(data);
         storageLocalData()
         totalTasks()
     }
 })
 
-//localStorage.clear()
-
-
 window.addEventListener('load', () => {
     if (localStorage.getItem('data')) {
         data = JSON.parse(localStorage.getItem('data'))
-        console.log(data);
-
         data.map(element => {
             const renderFromBrowser = `
             <li status="${element.status}" id="${element.id}">
@@ -134,7 +116,6 @@ window.addEventListener('load', () => {
 
 function totalTasks() {
     let tasks = 0
-
     data.map((ele) => {
         if (ele.status === 'pending') {
             tasks++
@@ -144,3 +125,35 @@ function totalTasks() {
         ${tasks} pending ${tasks !== 1? 'tasks': 'task'} left
     `
 }
+
+completeButton.addEventListener('click', () => {
+    let liId = ''
+    data.map((ele) => {
+        liId = ele.id
+        if (ele.status !== 'completed') {
+            document.getElementById(liId).style.display = 'none'
+        }
+    })
+})
+
+
+pendingButton.addEventListener('click', () => {
+    let liId = ''
+    data.map((ele) => {
+        liId = ele.id
+        if (ele.status !== 'pending') {
+            document.getElementById(liId).style.display = 'none'
+        }
+        if (ele.status === 'pending') {
+            document.getElementById(liId).style.display = 'block'
+        }
+    })
+
+})
+
+
+allButton.addEventListener('click', () => {
+    data.map((ele) => {
+        document.getElementById(ele.id).style.display = 'block'
+    })
+})
