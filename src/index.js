@@ -130,6 +130,7 @@ completeButton.addEventListener('click', () => {
     let liId = ''
     data.map((ele) => {
         liId = ele.id
+        document.getElementById(liId).style.display = 'flex'
         if (ele.status !== 'completed') {
             document.getElementById(liId).style.display = 'none'
         }
@@ -141,11 +142,9 @@ pendingButton.addEventListener('click', () => {
     let liId = ''
     data.map((ele) => {
         liId = ele.id
+        document.getElementById(liId).style.display = 'flex'
         if (ele.status !== 'pending') {
             document.getElementById(liId).style.display = 'none'
-        }
-        if (ele.status === 'pending') {
-            document.getElementById(liId).style.display = 'flex'
         }
     })
 
