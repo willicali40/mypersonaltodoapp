@@ -145,7 +145,7 @@ pendingButton.addEventListener('click', () => {
             document.getElementById(liId).style.display = 'none'
         }
         if (ele.status === 'pending') {
-            document.getElementById(liId).style.display = 'block'
+            document.getElementById(liId).style.display = 'flex'
         }
     })
 
@@ -154,6 +154,6 @@ pendingButton.addEventListener('click', () => {
 
 allButton.addEventListener('click', () => {
     data.map((ele) => {
-        document.getElementById(ele.id).style.display = 'block'
+        document.getElementById(ele.id).style.display = 'flex'
     })
 })
